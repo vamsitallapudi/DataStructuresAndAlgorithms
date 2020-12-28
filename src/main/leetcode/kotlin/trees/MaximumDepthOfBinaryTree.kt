@@ -1,4 +1,4 @@
-package main.leetcode.kotlin
+package main.leetcode.kotlin.trees
 
 import main.leetcode.kotlin.trees.TreeNode
 import main.leetcode.kotlin.trees.initializeBinaryTree
