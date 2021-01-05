@@ -9,3 +9,10 @@ fun initializeBinaryTree(): TreeNode {
     val b = TreeNode(3)
     return TreeNode(1, a, b)
 }
+
+fun printBinaryTree(root:TreeNode?) {
+    if (root == null) return
+    println(root.data)
+    root.left?.let { printBinaryTree(it) }
+    root.right?.let { printBinaryTree(it) }
+}
