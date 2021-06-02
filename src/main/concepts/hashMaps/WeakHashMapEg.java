@@ -25,4 +25,9 @@ public class WeakHashMapEg {
             super.finalize();
         }
     }
+    /* OUTPUT:
+        before: {main.concepts.hashMaps.WeakHashMapEg$Person@1fb3ebeb=1, main.concepts.hashMaps.WeakHashMapEg$Person@548c4f57=1}
+        Calling finalize method
+        after: {main.concepts.hashMaps.WeakHashMapEg$Person@548c4f57=1}
+    */
 }
