@@ -1,4 +1,4 @@
-package main.leetcode.java.heaps;
+package main.leetcode.heaps.java;
 
 import java.util.*;
 

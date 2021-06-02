@@ -1,4 +1,4 @@
-package main.leetcode.java;
+package main.leetcode.heaps;
 
 import java.util.ArrayDeque;
 
