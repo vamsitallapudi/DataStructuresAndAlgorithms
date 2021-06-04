@@ -1,5 +1,8 @@
 package main.leetcode.trees.tries;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Trie {
 
     class TrieNode {
@@ -9,6 +12,13 @@ class Trie {
         private final int size = 26;
 
         private boolean isWord;
+
+        char c;
+
+        public TrieNode(char c) {
+            this.c = c;
+            links = new TrieNode[size];
+        }
 
         public TrieNode() {
             links = new TrieNode[size];
@@ -52,7 +62,7 @@ class Trie {
         for (int i = 0; i < word.length(); i++) {
             char ch = word.charAt(i);
             if (!node.containsKey(ch)) {
-                node.put(ch, new TrieNode());
+                node.put(ch, new TrieNode(ch));
             }
             node = node.get(ch);
         }
@@ -74,15 +84,44 @@ class Trie {
         }
         return node.isWord();
     }
+    public void suggestHelper(TrieNode root, List<String> list, StringBuffer curr) {
+        if (root.isWord) {
+            list.add(curr.toString());
+        }
+
+        if (root.links == null || root.links.length <=0)
+            return;
+
+        for (TrieNode child : root.links) {
+            if(child == null)
+                continue;
+            suggestHelper(child, list, curr.append(child.c));
+            curr.setLength(curr.length() - 1);
+        }
+    }
+
+    public List<String> suggest(String prefix) {
+        List<String> list = new ArrayList<>();
+        TrieNode lastNode = root;
+        StringBuffer curr = new StringBuffer();
+        for (char c : prefix.toCharArray()) {
+            lastNode = lastNode.get(c);
+            if (lastNode == null)
+                return list;
+            curr.append(c);
+        }
+        suggestHelper(lastNode, list, curr);
+        return list;
+    }
 
     /**
      * Returns if there is any word in the trie that starts with the given prefix.
      */
     public boolean startsWith(String prefix) {
         TrieNode node = root;
-        for(int i = 0; i< prefix.length();i++) {
+        for (int i = 0; i < prefix.length(); i++) {
             char ch = prefix.charAt(i);
-            if(node.containsKey(ch)) {
+            if (node.containsKey(ch)) {
                 node = node.get(ch);
             } else {
                 return false;
@@ -99,6 +138,15 @@ class Trie {
         trie.startsWith("app");
         trie.insert("app");
         trie.search("search");
+        trie.insert("hello");
+        trie.insert("hell");
+        trie.insert("help");
+        trie.insert("helps");
+        trie.insert("helping");
+        List<String> suggestionList = trie.suggest("hel");
+        for (int i = 0; i < suggestionList.size(); i++) {
+            System.out.println(suggestionList.get(i));
+        }
     }
 }
 
