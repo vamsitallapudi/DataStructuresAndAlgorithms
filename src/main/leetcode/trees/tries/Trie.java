@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Trie {
+    public static final int SEARCH_RATE_LIMITER = 5;
 
     class TrieNode {
         //        R links to node children
@@ -84,16 +85,19 @@ class Trie {
         }
         return node.isWord();
     }
+
     public void suggestHelper(TrieNode root, List<String> list, StringBuffer curr) {
+        if (list.size() >= SEARCH_RATE_LIMITER)
+            return;
         if (root.isWord) {
             list.add(curr.toString());
         }
 
-        if (root.links == null || root.links.length <=0)
+        if (root.links == null || root.links.length <= 0)
             return;
 
         for (TrieNode child : root.links) {
-            if(child == null)
+            if (child == null)
                 continue;
             suggestHelper(child, list, curr.append(child.c));
             curr.setLength(curr.length() - 1);
@@ -143,6 +147,12 @@ class Trie {
         trie.insert("help");
         trie.insert("helps");
         trie.insert("helping");
+        trie.insert("helpings");
+        trie.insert("helpingsa");
+        trie.insert("helpingsaa");
+        trie.insert("helpingsaaaa");
+        trie.insert("helpingssss");
+        trie.insert("helpingssss");
         List<String> suggestionList = trie.suggest("hel");
         for (int i = 0; i < suggestionList.size(); i++) {
             System.out.println(suggestionList.get(i));
